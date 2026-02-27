@@ -10,18 +10,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18' # או הגרסה שאת משתמשת בה
-
-      - name: Build Client
-        run: |
-          npm install
-          npm run build
 
       - name: Deploy to Server
         uses: appleboy/ssh-action@v0.1.10
@@ -31,12 +19,13 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY_AYALAKASTNER }}
           script: |
             # עדכון הקוד מהגיט בשרת
-            cd /home/ubuntu
+            cd /home/ubuntu/KonditoriaApp
             git checkout ayalaKastner
             git pull origin ayalaKastner
             
             # בנייה והעתקה של הקליינט (בהנחה שהרצת הבילד ב-GitHub)
             # אם את רוצה לבנות ישירות על השרת כדי לחסוך העברת קבצים:
+            cd ./react
             npm install
             npm run build
             sudo cp -r dist/* /var/www/html/
