@@ -16,8 +16,8 @@ jobs:
           script: |
             # עדכון הקוד מהגיט בשרת
             cd /home/ubuntu/KonditoriaApp
-            git checkout ayalaKastner
-            git pull origin ayalaKastner
+            git checkout Devoiry_Roberts
+            git pull origin Devoiry_Roberts
             # בנייה והעתקה של הקליינט (בהנחה שהרצת הבילד ב-GitHub)
             # אם את רוצה לבנות ישירות על השרת כדי לחסוך העברת קבצים:
             cd ./react
