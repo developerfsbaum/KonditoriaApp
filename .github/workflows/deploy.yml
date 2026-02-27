@@ -1,0 +1,34 @@
+name: Deploy to EC2
+
+on:
+  push:
+    branches:
+      - שינדי ויזנפלד
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Deploy to Server
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          host: ${{ secrets.SERVER_IP_שינדי ויזנפלד }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY_שינדי ויזנפלד }}
+          script: |
+            # עדכון הקוד מהגיט בשרת
+            cd /home/ubuntu/KonditoriaApp
+            git checkout שינדי ויזנפלד
+            git pull origin שינדי ויזנפלד
+           
+            # בנייה והעתקה של הקליינט (בהנחה שהרצת הבילד ב-GitHub)
+            # אם את רוצה לבנות ישירות על השרת כדי לחסוך העברת קבצים:
+            cd ./react
+            npm install
+            npm run build
+            sudo cp -r dist/* /var/www/html/
+           
+            # אתחול הסרבר
+            sudo systemctl restart konditoria
