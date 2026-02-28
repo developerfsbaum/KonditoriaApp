@@ -3,7 +3,7 @@ name: Deploy to EC2
 on:
   push:
     branches:
-      - ayalaKastner
+      - Shoshana
 
 jobs:
   deploy:
@@ -14,14 +14,14 @@ jobs:
       - name: Deploy to Server
         uses: appleboy/ssh-action@v0.1.10
         with:
-          host: ${{ secrets.SERVER_IP_AYALAKASTNER }}
+          host: ${{ secrets.SERVER_IP_SHOSHANA }}
           username: ${{ secrets.SERVER_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY_AYALAKASTNER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY_SHOSHANA }}
           script: |
             # עדכון הקוד מהגיט בשרת
             cd /home/ubuntu/KonditoriaApp
-            git checkout ayalaKastner
-            git pull origin ayalaKastner
+            git checkout Shoshana
+            git pull origin Shoshana
            
             # בנייה והעתקה של הקליינט (בהנחה שהרצת הבילד ב-GitHub)
             # אם את רוצה לבנות ישירות על השרת כדי לחסוך העברת קבצים:
