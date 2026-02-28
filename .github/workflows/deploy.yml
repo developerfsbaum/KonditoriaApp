@@ -31,4 +31,4 @@ jobs:
             sudo cp -r dist/* /var/www/html/
            
             # אתחול הסרבר
-            sudo systemctl restart konditoria
+            sudo systemctl restart node-service
