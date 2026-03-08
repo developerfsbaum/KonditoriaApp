@@ -3,7 +3,7 @@ name: CI-CD Pipeline
 on:
   push:
     branches:
-      - main
+      - avital-ben-simhon
 
 jobs:
   build-and-deploy:
