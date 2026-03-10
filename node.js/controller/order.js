@@ -107,7 +107,7 @@ exports.delete = (req, res) => {
                 if (err) {
                     res.status(500).send("שגיאה במחיקת ההזמנה");
                 } else {
-                    res.send({ message: "הזמנה נמחקה בהצלחה", deleted: deleted[0] });
+                    res.send({ message: "ההזמנה נמחקה בהצלחה", deleted: deleted[0] });
                 }
             });
         }
