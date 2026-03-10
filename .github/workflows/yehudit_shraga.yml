@@ -22,8 +22,3 @@ jobs:
             cd ~/KonditoriaApp
             git pull origin yehudit_shraga
 
-git add .
-
-git commit -m "add deployment workflow"
-git push origin yehudit_shraga
-
