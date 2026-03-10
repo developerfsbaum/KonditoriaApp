@@ -20,7 +20,7 @@ jobs:
 
       - name: Build React Client
         run: |
-          cd KonditoriaApp/react
+          cd react
           npm install
           npm run build
 
