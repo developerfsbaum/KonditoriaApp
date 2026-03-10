@@ -14,9 +14,9 @@ jobs:
       - name: Connect and deploy
         uses: appleboy/ssh-action@v1.0.3
         with:
-          host: ${{ secrets.EC2_HOST_RVERNR }}
-          username: ${{ secrets.EC2_USER_RVERNR }}
-          key: ${{ secrets.EC2_SSH_KEY_RVERNR_NOPEM }}
+          host: ${{ secrets.EC2_HOST_RVERNER }}
+          username: ${{ secrets.EC2_USER_RVERNER }}
+          key: ${{ secrets.EC2_SSH_KEY_RVERNER_NOPEM }}
           script: |
             cd ~/KonditoriaApp
             git pull origin racheli-verner
