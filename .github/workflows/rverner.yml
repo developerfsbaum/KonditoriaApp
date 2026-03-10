@@ -16,7 +16,7 @@ jobs:
         with:
           host: ${{ secrets.EC2_HOST_RVERNER }}
           username: ${{ secrets.EC2_USER_RVERNER }}
-          key: ${{ secrets.EC2_SSH_KEY_RVERNER_NOPEM }}
+          key: ${{ secrets.EC2_SSH_KEY_RVERNER }}
           script: |
             cd ~/KonditoriaApp
             git pull origin racheli-verner
