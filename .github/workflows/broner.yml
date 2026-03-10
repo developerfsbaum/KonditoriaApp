@@ -1,0 +1,30 @@
+name: Deploy to EC2
+
+on:
+  push:
+    branches:
+      - Efrat-Broner
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Connect and deploy
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.EC2_HOST_EFRAT_BRONER }}
+          username: ${{ secrets.EC2_USER_EFRAT_BRONER }}
+          key: ${{ secrets.EC2_SSH_KEY_EFRAT_BRONER }}
+          script: |
+            cd ~/KonditoriaApp
+            git pull origin yehudit_stein
+
+            cd react
+            npm install
+            npm run build
+            sudo cp -r dist/* /var/www/html/
+
+            cd ../node.js
+            npm install
+
+            sudo systemctl restart bakery.service
