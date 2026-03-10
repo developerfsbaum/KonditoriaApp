@@ -27,7 +27,7 @@ exports.getByUserId = (req, res) => {
         const userOrders = orders.filter(o => o.userId === userId);
 
         if (userOrders.length === 0) {
-            res.status(404).send("לא נמצאו הזמנות למשתמש זה");
+            res.status(404).send("לא נמצאו הזמנות למשתמש זה.");
         } else {
             res.send(userOrders);
         }
