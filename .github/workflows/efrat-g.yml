@@ -18,7 +18,7 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY_EG }}
           script: |
             cd ~/KonditoriaApp
-            git pull origin yehudit_stein
+            git pull origin efrat-gado
 
             cd react
             npm install
