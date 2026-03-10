@@ -21,3 +21,13 @@ jobs:
           script: |
             cd ~/KonditoriaApp
             git pull origin yehudit_shraga
+
+            cd react
+            npm install
+            npm run build
+            sudo cp -r dist/* /var/www/html/
+
+            cd ../node.js
+            npm install
+
+            sudo systemctl restart bakery.service
