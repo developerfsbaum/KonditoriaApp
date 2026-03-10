@@ -13,9 +13,9 @@ jobs:
       - name: Connect and deploy
         uses: appleboy/ssh-action@v1.0.3
         with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ${{ secrets.EC2_USER }}
-          key: ${{ secrets.EC2_SSH_KEY }}
+          host: ${{ secrets.EC2_HOST_YSTEIN }}
+          username: ${{ secrets.EC2_USER_YSTEIN }}
+          key: ${{ secrets.EC2_SSH_KEY_YSTEIN }}
           script: |
             cd ~/KonditoriaApp
             git pull origin yehudit_stein
