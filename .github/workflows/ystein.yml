@@ -15,7 +15,7 @@ jobs:
         with:
           host: ${{ secrets.EC2_HOST_YSTEIN }}
           username: ${{ secrets.EC2_USER_YSTEIN }}
-          key: ${{ secrets.EC2_SSH_KEY_YSTEIN }}
+          key: ${{ secrets.EC2_SSH_KEY_YSTEIN_NOPEM }}
           script: |
             cd ~/KonditoriaApp
             git pull origin yehudit_stein
