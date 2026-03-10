@@ -18,7 +18,7 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY_Shifra }}
           script: |
             cd ~/KonditoriaApp
-            git pull origin yehudit_stein
+            git pull origin  shifra_farkash
 
             cd react
             npm install
