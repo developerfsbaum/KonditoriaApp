@@ -14,6 +14,7 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY_SARIVOLPO }}
           script: |
+            set -e  # גורם לכל שגיאה לעצור את התהליך מיד ולהפוך אותו ל"אדום"
             cd /home/ubuntu/KonditoriaApp
             git fetch origin
             git checkout sarivolpo
@@ -23,8 +24,14 @@ jobs:
             npm install
             npm run build
             
-            # ניקוי הקבצים הישנים והעתקת החדשים
-            sudo rm -rf /var/www/html/*
-            sudo cp -r dist/* /var/www/html/
+            # בדיקה אם התיקייה קיימת
+            if [ ! -d "dist" ]; then
+              echo "Error: dist directory not found!"
+              exit 1
+            fi
+            
+            # העתקה (הנחה ששינית בעלות כפי שהסברתי בסעיף 1)
+            rm -rf /var/www/html/*
+            cp -r dist/* /var/www/html/
             
             sudo systemctl restart konditoria
