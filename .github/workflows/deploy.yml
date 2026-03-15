@@ -1,0 +1,25 @@
+name: Deploy to EC2
+
+on:
+  push:
+    branches:
+      - gili-branch  # וודאי שזה שם הבראנץ' שלך
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Deploy to Server
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          host: ${{ secrets.EC2_HOST_GILI }}
+          username: ${{ secrets.EC2_USER_GILI }}
+          key: ${{ secrets.EC2_SSH_KEY_GILI }}
+          script: |
+            cd ~/KonditoriaApp
+            git pull origin gili-branch
+            npm install
+            sudo systemctl restart bakery.service
