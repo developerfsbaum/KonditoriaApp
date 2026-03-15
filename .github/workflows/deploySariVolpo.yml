@@ -14,15 +14,17 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY_SARIVOLPO }}
           script: |
-            # עדכון הקוד מהגיט בשרת
             cd /home/ubuntu/KonditoriaApp
+            git fetch origin
             git checkout sarivolpo
             git pull origin sarivolpo
-            # בנייה והעתקה של הקליינט (בהנחה שהרצת הבילד ב-GitHub)
-            # אם את רוצה לבנות ישירות על השרת כדי לחסוך העברת קבצים:
-            cd ./react
+            
+            cd react
             npm install
             npm run build
+            
+            # ניקוי הקבצים הישנים והעתקת החדשים
+            sudo rm -rf /var/www/html/*
             sudo cp -r dist/* /var/www/html/
-            # אתחול הסרבר
+            
             sudo systemctl restart konditoria
