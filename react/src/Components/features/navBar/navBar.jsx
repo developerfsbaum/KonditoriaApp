@@ -40,7 +40,7 @@ const NavBar = () => {
 
                 {currentUser && (
                     <>
-                        <li><Link to="productList">רשימת מוצרים</Link></li>
+                        <li><Link to="productList">המוצרים</Link></li>
                         <li><Link to="myOrder">ההזמנות שלי</Link></li>
                         <li><Link to="cart">הסל שלי</Link></li>
                     </>
