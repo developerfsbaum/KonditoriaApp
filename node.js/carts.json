@@ -156,5 +156,20 @@
         "quantity": 5
       }
     ]
+  },
+  {
+    "userId": 18,
+    "cart": [
+      {
+        "id": 15,
+        "category": "קונדיטוריה",
+        "name": "עוגת בלרינה",
+        "description": "עוגייה פריכה עם חמאת בוטנים",
+        "image": "BallerinaCake.jpg",
+        "content": "קמח, חמאת בוטנים, ביצה",
+        "price": "55",
+        "quantity": 1
+      }
+    ]
   }
 ]
