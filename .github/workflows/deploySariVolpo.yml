@@ -14,15 +14,20 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY_SARIVOLPO }}
           script: |
-            # עדכון הקוד מהגיט בשרת
-            cd /home/ubuntu/KonditoriaApp
-            git checkout sarivolpo
-            git pull origin sarivolpo
-            # בנייה והעתקה של הקליינט (בהנחה שהרצת הבילד ב-GitHub)
-            # אם את רוצה לבנות ישירות על השרת כדי לחסוך העברת קבצים:
-            cd ./react
-            npm install
-            npm run build
-            sudo cp -r dist/* /var/www/html/
-            # אתחול הסרבר
-            sudo systemctl restart konditoria
+            echo "Starting deployment..."
+            cd /home/ubuntu/KonditoriaApp || { echo "Failed to change directory"; exit 1; }
+            echo "Checking out branch sarivolpo..."
+            git checkout sarivolpo || { echo "Failed to checkout branch"; exit 1; }
+            echo "Pulling latest changes from origin..."
+            git pull origin sarivolpo || { echo "Failed to pull changes"; exit 1; }
+            echo "Navigating to react directory..."
+            cd ./react || { echo "Failed to change directory to react"; exit 1; }
+            echo "Installing npm packages..."
+            npm install || { echo "npm install failed"; exit 1; }
+            echo "Building the client..."
+            npm run build || { echo "npm run build failed"; exit 1; }
+            echo "Copying files to /var/www/html/"
+            sudo cp -r dist/* /var/www/html/ || { echo "Failed to copy files"; exit 1; }
+            echo "Restarting server..."
+            sudo systemctl restart konditoria || { echo "Failed to restart server"; exit 1; }
+            echo "Deployment completed successfully."
