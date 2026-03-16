@@ -1,55 +1,31 @@
-name: Deploy KonditoriaApp to EC2
+name: Deploy to EC2
 
 on:
   push:
     branches:
-      - chedvaBranch 
+      - chedvaBranch
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18' 
-
-      - name: Build React Client
-        run: |
-          cd KonditoriaApp/react
-          npm install
-          npm run build
-
-      - name: Deploy to EC2
-        uses: appleboy/scp-action@master
-        with:
-          host: ${{ secrets.EC2_HOST_CHEDVA }}
-          username: ${{ secrets.EC2_USER_CHEDVA }}
-          key: ${{ secrets.EC2_SSH_KEY_CHEDVA }}
-          source: "KonditoriaApp/react/dist/*,KonditoriaApp/node.js/*"
-          target: "/home/${{ secrets.EC2_USER }}/deploy_temp"
-
-      - name: Execute Remote Commands
-        uses: appleboy/ssh-action@master
+      - name: Connect and deploy
+        uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.EC2_HOST_CHEDVA }}
           username: ${{ secrets.EC2_USER_CHEDVA }}
           key: ${{ secrets.EC2_SSH_KEY_CHEDVA }}
           script: |
-            # עדכון הקליינט
-            sudo cp -r /home/${{ secrets.EC2_USER }}/deploy_temp/KonditoriaApp/react/dist/* /var/www/html/
-            
-            # עדכון השרת (העתקה לתיקייה המקורית של הקוד)
-            sudo cp -r /home/${{ secrets.EC2_USER }}/deploy_temp/KonditoriaApp/node.js/* /home/${{ secrets.EC2_USER }}/KonditoriaApp/node.js/
-            
-            # התקנת דיפנדנסיז בשרת וריסטארט
-            cd /home/${{ secrets.EC2_USER }}/KonditoriaApp/node.js
-            npm install --production
+            cd ~/KonditoriaApp
+            git pull origin chedvaBranch
+
+            cd react
+            npm install
+            npm run build
+            sudo cp -r dist/* /var/www/html/
+
+            cd ../node.js
+            npm install
+
             sudo systemctl restart bakery.service
-            
-            # ניקוי זמני
-            rm -rf /home/${{ secrets.EC2_USER }}/deploy_temp
