@@ -2,8 +2,9 @@ name: Deploy to EC2
 
 on:
   push:
-    branches:
-     - efrat_shlachter
+     branches:
+      - efrat_shlachter
+
      
 jobs:
   deploy:
