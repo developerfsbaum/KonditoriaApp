@@ -11,7 +11,7 @@ jobs :
          uses: appleboy/ssh-action@v0.1.10 
          with :
           host: ${{ secrets.EC2_HOST_ELKY }}
-          username: ${{ secrets.USER }}
+          username: ${{ secrets.USERNAME }}
           key: ${{ secrets.EC2_SSH_KEY_ELKY }}
           script: |
             # החליפי את my-project-folder בשם התיקייה האמיתי בשרת שלך
