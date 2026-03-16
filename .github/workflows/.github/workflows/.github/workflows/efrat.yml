@@ -4,7 +4,7 @@ on:
   push:
     branches:
      efrat_shlachter
-
+     
 jobs:
   deploy:
     runs-on: ubuntu-latest
