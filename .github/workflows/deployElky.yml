@@ -19,6 +19,7 @@ jobs:
 
       - name: Build Check
         run: |
+          cd react
           npm install
           npm run build
 
@@ -30,9 +31,10 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY_ELKY }}
           script: |
             # החליפי את my-project-folder בשם התיקייה האמיתי בשרת שלך
-            cd /home/unubtu 
+            cd /home/unubtu/KonditoriaApp 
             git checkout Elky_Schiff
             git pull origin Elky_Schiff
+            cd react
             npm install
             npm run build
             sudo cp -r dist/* /var/www/html/
