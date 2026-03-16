@@ -1,0 +1,39 @@
+name: Deploy Fullstack to EC2
+
+on:
+  push:
+    branches:
+      - Elky_Schiff
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Build Check
+        run: |
+          npm install
+          npm run build
+
+      - name: Deploy to EC2
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.EC2_HOST_ELKY }}
+          username: ${{ secrets.USER }}
+          key: ${{ secrets.EC2_SSH_KEY_ELKY }}
+          script: |
+            # החליפי את my-project-folder בשם התיקייה האמיתי בשרת שלך
+            cd /home/unubtu 
+            git checkout Elky_Schiff
+            git pull origin Elky_Schiff
+            npm install
+            npm run build
+            sudo cp -r dist/* /var/www/html/
+            sudo systemctl restart Konditoria
