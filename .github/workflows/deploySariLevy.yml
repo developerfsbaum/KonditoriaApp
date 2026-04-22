@@ -1,0 +1,36 @@
+name: Deploy to EC2
+on:
+  push:
+    branches:
+      - SariLevy # מוודאים שזה השם המדויק בגיטהאב
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Parse Secrets
+        id: vars
+        run: |
+          echo "ip=$(echo '${{ secrets.SARILEVY_CONFIG }}' | jq -r '.ip')" >> $GITHUB_OUTPUT
+          echo "user=$(echo '${{ secrets.SARILEVY_CONFIG }}' | jq -r '.user')" >> $GITHUB_OUTPUT
+
+      - name: Deploy to Server
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          host: ${{ steps.vars.outputs.ip }}
+          username: ${{ steps.vars.outputs.user }}
+          key: ${{ secrets.SSH_PRIVATE_KEY_SARILEVY }}
+          script: |
+            cd /home/ubuntu/KonditoriaApp
+            git checkout SariLevy # תיקנתי מ-SariLey ל-SariLevy
+            git pull origin SariLevy # תיקנתי מ-SariLey ל-SariLevy
+            
+            cd ./react
+            npm install
+            npm run build
+            sudo cp -r dist/* /var/www/html/
+            
+            sudo systemctl restart konditoria
