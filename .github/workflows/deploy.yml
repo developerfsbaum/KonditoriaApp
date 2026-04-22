@@ -1,8 +1,9 @@
 name: Deploy to EC2
+
 on:
   push:
     branches:
-      - SariLey
+      - SariLevy
 
 jobs:
   deploy:
@@ -11,7 +12,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # צעד שמפרק רק את ה-IP וה-User מה-Secret המשותף
       - name: Parse Secrets
         id: vars
         run: |
@@ -21,24 +21,15 @@ jobs:
       - name: Deploy to Server
         uses: appleboy/ssh-action@v0.1.10
         with:
-          # כאן אנחנו שואבים מה-JSON שפירקנו בצעד הקודם
           host: ${{ steps.vars.outputs.ip }}
           username: ${{ steps.vars.outputs.user }}
-          
-          # כאן אנחנו משתמשים ב-Secret הרגיל כמו המורה
           key: ${{ secrets.SSH_PRIVATE_KEY_SARILEVY }}
-          
           script: |
-            # עדכון הקוד מהגיט בשרת
             cd /home/ubuntu/KonditoriaApp
-            git checkout SariLey
-            git pull origin SariLey
-            
-            # בנייה והעתקה של הקליינט
+            git checkout SariLevy
+            git pull origin SariLevy
             cd ./react
             npm install
             npm run build
             sudo cp -r dist/* /var/www/html/
-            
-            # אתחול הסרבר
             sudo systemctl restart konditoria
